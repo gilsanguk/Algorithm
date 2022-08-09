@@ -17,3 +17,7 @@ for i in range(n):
 for T in range(int(stdin.readline())):
 
     print(f'#{T+1}')
+# 텍스트 파일 인풋
+import sys
+
+sys.stdin = open('input.txt')
