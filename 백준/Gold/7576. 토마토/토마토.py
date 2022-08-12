@@ -1,40 +1,40 @@
-import sys;
+import sys
 from collections import deque
 input = sys.stdin.readline
-m, n = map(int, input().split())
 
-dy = [-1, 1, 0, 0]
-dx = [0, 0, -1, 1]
+def delta(y, x, li, queue):
+    dy = [-1, 1, 0, 0]
+    dx = [0, 0, -1, 1]
+    for i in range(4):
+        if li[y + dy[i]][x + dx[i]] == 0:
+            li[y + dy[i]][x + dx[i]] = 1
+            queue.append((y + dy[i], x + dx[i]))
 
-
-def solve(n, m, li, queue):
+def solve(n,m,li):
+    queue = deque()
+    for y in range(1,n+1):
+        for x in range(1,m+1):
+            if li[y][x] == 1:
+                queue.append((y, x))
     cnt = 0
     while queue:
-        cnt += 1
         for _ in range(len(queue)):
             y, x = queue.popleft()
-            for i in range(4):
-                move_y = y + dy[i]
-                move_x = x + dx[i]
-                if (0 <= move_y < n) and (0 <= move_x < m):
-                    if li[move_y][move_x] == 0:
-                        li[move_y][move_x] = 1
-                        queue.append([move_y, move_x])
-    return cnt
+            delta(y, x, li, queue)
+        cnt += 1
+    check = 1
+    for i in li:
+        for j in i:
+            check *= j
+    if check != 0:
+        return cnt - 1
+    else:
+        return -1
 
-li = [(list(map(int, input().split()))) for _ in range(n)]
-queue = deque()
-for y in range(n):
-    for x in range(m):
-        if li[y][x] == 1:
-            queue.append([y, x])
+m, n = map(int, input().split())
+li = [[-1] * (m + 2)]
+for _ in range(n):
+    li.append([-1] + list(map(int, input().split())) + [-1])
+li.append([-1] * (m + 2))
 
-result = solve(n, m, li, queue) - 1
-
-for y in range(n):
-    for x in range(m):
-        if li[y][x] == 0:
-            print(-1)
-            quit()
-
-print(result)
+print(solve(n, m, li))
