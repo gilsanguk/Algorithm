@@ -17,26 +17,23 @@ def delta(z, y, x, li, queue, m, n, h):
 
 def solve(n, m, h, li):
     queue = deque()
+    cnt = 0
     for z in range(h):
         for y in range(n):
             for x in range(m):
                 if li[z][y][x] == 1:
                     queue.append((z, y, x))
-    cnt = 0
     while queue:
         for _ in range(len(queue)):
             z, y, x = queue.popleft()
             delta(z, y, x, li, queue, m, n, h)
         cnt += 1
-    check = 1
-    for i in li:
-        for j in i:
-            for k in j:
-                check *= k
-    if check != 0:
-        return cnt - 1
-    else:
-        return -1
+    for z in range(h):
+        for y in range(n):
+            for x in range(m):
+                if li[z][y][x] == 0:
+                    return -1
+    return cnt - 1
 
 
 m, n, h = map(int, input().split())
