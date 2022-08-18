@@ -1,5 +1,7 @@
 import time
-start = time.time()
+from datetime import timedelta
+start = time.process_time()
 
 
-print('time :', time.time() - start)
+end = time.process_time()
+print('time :', timedelta(seconds=end - start))
