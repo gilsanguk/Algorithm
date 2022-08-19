@@ -13,9 +13,9 @@ def BFS(li,y,x):
         for i in range(len(q)):
             y,x = q.popleft()
             for i in range(4):
-                tmp_y, tmp_x = y+dy[i], x+dx[i]
-                if 0 <= tmp_y < len(li) and 0 <= tmp_x < len(li[0]):
-                    if li[tmp_y][tmp_x] == 'L' and visited[tmp_y][tmp_x]: 
-                        q.append((tmp_y, tmp_x))
-                        visited[tmp_y][tmp_x] = 0
+                ny, nx = y+dy[i], x+dx[i]
+                if 0 <= ny < len(li) and 0 <= nx < len(li[0]):
+                    if li[ny][nx] == 'L' and visited[ny][nx]: 
+                        q.append((ny, nx))
+                        visited[ny][nx] = 0
     return cnt-1
