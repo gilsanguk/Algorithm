@@ -13,6 +13,7 @@ def perm(k, r):
 def comb(k, res):
     if len(res) == r:
         print(*res)
+        return
 
     for i in range(k, n):
         comb(i + 1, res + [li[i]])
