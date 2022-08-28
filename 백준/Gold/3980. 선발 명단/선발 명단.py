@@ -8,15 +8,15 @@ def perm(row, overall):
         res = max(res, overall)
         return
     for i in range(n):
-        if li[row][i] != 0 and i not in visited:
-            visited[row] = i
+        if li[row][i] != 0 and not visited[i]:
+            visited[i] = 1
             perm(row+1, overall+li[row][i])
-            visited[row] = -1
+            visited[i] = 0
 
 for _ in range(int(input())):
     n = 11
     li = [list(map(int,input().split())) for _ in range(n)]
-    visited = [-1] * n
+    visited = [0] * n
     res = 0
     perm(0, 0)
     print(res)
