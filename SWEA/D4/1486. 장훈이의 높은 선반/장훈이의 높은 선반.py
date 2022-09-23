@@ -7,9 +7,11 @@ for T in range(int(input())):
         num = li[i]
         now = {num}
         for j in dp:
-            if num+j >= k:
-                res = min(res, num+j)
-            now.add(num+j)
+            tmp = num+j
+            if tmp >= res: continue
+            if tmp >= k:
+                res = min(res, tmp)
+            now.add(tmp)
         for j in now:
             dp.add(j)
     print(f'#{T+1}', res-k)
