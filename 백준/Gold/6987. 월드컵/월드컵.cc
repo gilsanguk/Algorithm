@@ -5,6 +5,7 @@ using namespace std;
 
 int scores[6][3], res;
 vector<pair<int, int>> games;
+vector<pair<int, int>> delta = {{1, 1}, {0, 2}, {2, 0}};
 
 int solve(int curr){
     if (curr == 15){
@@ -14,20 +15,14 @@ int solve(int curr){
         return true;
     }
     auto [home, away] = games[curr];
-    if (scores[home][1] && scores[away][1]){
-        scores[home][1]--;scores[away][1]--;
-        if (solve(curr+1)) return true;
-        scores[home][1]++;scores[away][1]++;
-    }
-    if (scores[home][0] && scores[away][2]){
-        scores[home][0]--;scores[away][2]--;
-        if (solve(curr+1)) return true;
-        scores[home][0]++;scores[away][2]++;
-    }
-    if (scores[home][2] && scores[away][0]){
-        scores[home][2]--;scores[away][0]--;
-        if (solve(curr+1)) return true;
-        scores[home][2]++;scores[away][0]++;
+    for (auto [a, b] : delta){
+        if (scores[home][a] && scores[away][b]){
+            scores[home][a]--;
+            scores[away][b]--;
+            if (solve(curr + 1)) return true;
+            scores[home][a]++;
+            scores[away][b]++;
+        }
     }
     return false;
 }
