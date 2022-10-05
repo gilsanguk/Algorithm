@@ -21,6 +21,7 @@ int simulation(int sy, int sx, int y, int x, int d){
         y += delta[d][0], x += delta[d][1];
         if (y < 0 || y >= N || x < 0 || x >= N) return cnt * 2 + 1;
         int now = map[y][x];
+        if (now == 0 && cnt == 0) return 0;
         if (y == sy && x == sx) return cnt;
         if (now == -1) return cnt;
         if (0 < now && now <= 5){
