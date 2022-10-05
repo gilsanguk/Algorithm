@@ -4,10 +4,10 @@
 using namespace std;
 int T, N;
 int map[101][101];
-vector<pair<int, int>> wormhole[11];
+vector<pair<int, int>> wormhole[5];
 int delta[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 int rdir[6][4] = {
-        {0, 1, 2, 3},
+        {0, 0, 0, 0},
         {-1, -1, 1, 0},
         {1, -1, -1, 2},
         {3, 2, -1, -1},
@@ -30,6 +30,7 @@ int simulation(int sy, int sx, int y, int x, int d){
             cnt++;
         }
         if (5 < now){
+            now -= 6;
             int ny = wormhole[now][0].first, nx = wormhole[now][0].second;
             if (ny == y && nx == x){
                 ny = wormhole[now][1].first, nx = wormhole[now][1].second;
@@ -46,11 +47,11 @@ int main(){
     for (int t = 0; t < T; t++){
         cin >> N;
         int res = 0;
-        for (int i = 6; i <= 10; i++) wormhole[i].clear();
+        for (int i = 0; i < 5; i++) wormhole[i].clear();
         for (int y = 0; y < N; y++){
             for (int x = 0; x < N; x++){
                 cin >> map[y][x];
-                if (map[y][x] > 5) wormhole[map[y][x]].push_back({y, x});
+                if (map[y][x] > 5) wormhole[map[y][x] - 6].push_back({y, x});
             }
         }
 
