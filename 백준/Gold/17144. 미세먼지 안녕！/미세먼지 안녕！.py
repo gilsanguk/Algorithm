@@ -19,25 +19,19 @@ def clean():
 def diffusion():
     for y in range(R):
         for x in range(C):
-            if room[y][x] > 0:
-                cnt = 0
-                for i in range(4):
-                    ny = y + dy[i]
-                    nx = x + dx[i]
-                    if 0 <= ny < R and 0 <= nx < C and room[ny][nx] != -1:
-                        tmp[ny][nx] += room[y][x] // 5
-                        cnt += 1
-                room[y][x] -= (room[y][x] // 5) * cnt
+            if room[y][x] < 5: continue
+            cnt = 0
+            for i in range(4):
+                ny, nx = y + dy[i], x + dx[i]
+                if 0 <= ny < R and 0 <= nx < C and room[ny][nx] != -1:
+                    tmp[ny][nx] += room[y][x] // 5
+                    cnt += 1
+            room[y][x] -= (room[y][x] // 5) * cnt
+
     for y in range(R):
         for x in range(C):
             room[y][x] += tmp[y][x]
             tmp[y][x] = 0
-
-def solve():
-    for _ in range(T):
-        diffusion()
-        clean()
-    print(sum(map(sum, room)) + 2)
 
 R, C, T = map(int, input().split())
 room = [0] * R
@@ -46,4 +40,7 @@ for i in range(R):
     if room[i][0] == -1:
         cleaner = [i - 1, i]
 tmp = [[0] * C for _ in range(R)]
-solve()
+for _ in range(T):
+    diffusion()
+    clean()
+print(sum(map(sum, room)) + 2)
