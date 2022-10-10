@@ -1,28 +1,27 @@
 from math import ceil, log
+def init(node, start, end):
+    if start == end:
+        tree[node] = arr[start]
+        return tree[node]
+    mid = (start + end) >> 1
+    tree[node] = init(node << 1, start, mid) + init((node << 1) | 1, mid + 1, end)
+    return tree[node]
 
-def init(arr, tree, i, left, right):
-    if left == right:
-        tree[i] = arr[left]
-        return tree[i]
-    mid = left + (right - left) // 2
-    tree[i] = init(arr, tree, i * 2, left, mid) + init(arr, tree, i * 2 + 1, mid + 1, right)
-    return tree[i]
+def search(node, start, end, left, right):
+    if left > end or right < start: return 0
+    if left <= start and end <= right: return tree[node]
+    mid = (start + end) >> 1
+    return search(node << 1, start, mid, left, right) + search((node << 1) | 1, mid + 1, end , left, right)
 
-
-def search(tree, i, start, end, left, right):
-    if end < left or right < start:
-        return 0
-    if left <= start and end <= right:
-        return tree[i]
-    mid = start + (end - start) // 2
-    return search(tree, i * 2, start, mid, left, right) + search(tree, i * 2 + 1, mid + 1, end, left, right)
-
-
-def update(tree, i, start, end, idx, diff):
-    if start > idx or idx > end:
-        return
-    tree[i] += diff
+def update(node, start, end, index, diff):
+    if index < start or index > end: return
+    tree[node] += diff
     if start != end:
-        mid = start + (end - start) // 2
-        update(tree, i * 2, start, mid, idx, diff)
-        update(tree, i * 2 + 1, mid + 1, end, idx, diff)
+        mid = (start + end) >> 1
+        update(node << 1, start, mid, index, diff)
+        update((node << 1) | 1, mid + 1, end, index, diff)
+
+
+N, M = map(int,input().split())
+arr = list(map(int,input().split()))
+tree = [0] * pow(2, ceil(log(N, 2)) + 1)
