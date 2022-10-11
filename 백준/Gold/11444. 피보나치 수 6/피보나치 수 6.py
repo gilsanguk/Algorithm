@@ -6,7 +6,7 @@ def mat_mul(a, b):
             tmp = 0
             for k in range(2):
                 tmp += a[i][k] * b[k][j]
-            ret[i][j] = tmp % MOD
+            ret[i][j] = tmp % 1000000007
     return ret
 
 def mat_pow(Matrix, n):
@@ -18,6 +18,5 @@ def mat_pow(Matrix, n):
 
 N = int(input())
 Matrix = [[1, 1], [1, 0]]
-MOD = 1000000007
-if N < 3: print(1)
+if N == 1: print(1)
 else: print((mat_pow(Matrix, N - 1)[0][0]))
