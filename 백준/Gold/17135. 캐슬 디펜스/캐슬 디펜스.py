@@ -21,13 +21,13 @@ def move(board):
         board[0][x] = 0
 
 def solve(row, archers, board):
-    global ans, cnt
+    cnt = 0
     if row == N:
-        ans = max(ans, cnt)
-        return
+        return 0
     for archer in archers: cnt += attack(archer, board)
     move(board)
-    solve(row+1, archers, board)
+    cnt += solve(row+1, archers, board)
+    return cnt
 
 
 N, M, D = map(int,input().split())
@@ -36,6 +36,5 @@ ans = 0
 cnt = 0
 for archers in comb(range(M), 3):
     copy_board = [board[i][:] for i in range(N)]
-    cnt = 0
-    solve(0, archers, copy_board)
+    ans = max(ans, solve(0, archers, copy_board))
 print(ans)
