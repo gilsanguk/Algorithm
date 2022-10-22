@@ -3,27 +3,34 @@
 
 using namespace std;
 
-int dp[100][100000];
 int N, K;
-int bag[100][2];
+int arr[101][2];
+int dp[101][100001];
 
-int ns(int now, int capacity){
-  if(now == N) return 0;
-  int &ret = dp[now][capacity];
-  if(ret != -1) return ret;
-  ret = 0;
-  int w = bag[now][0], v = bag[now][1];
-  if(capacity >= w) ret = max(ns(now + 1, capacity), ns(now + 1, capacity - w) + v);
-  else ret = ns(now + 1, capacity);
-  return ret;
+int solve(int n, int k){
+    if (n == 0) return 0;
+    int& ret = dp[n][k];
+    if (ret != -1) return ret;
+    ret = 0;
+    if (arr[n][0] <= k){
+        ret = max(solve(n-1, k), solve(n-1, k-arr[n][0]) + arr[n][1]);
+    }
+    else {
+        ret = solve(n-1, k);
+    }
+    return ret;
 }
 
+
 int main(){
-    memset(dp, -1, sizeof(dp));
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);cout.tie(NULL);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+#endif
+    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
     cin >> N >> K;
-    for(int i = 0; i < N; i++)
-        cin >> bag[i][0] >> bag[i][1];
-    cout << ns(0, K) << endl;
+    memset(dp, -1, sizeof(dp));
+    for (int i=1;i<=N;i++){
+        cin >> arr[i][0] >> arr[i][1];
+    }
+    cout << solve(N, K) << '\n';
 }
