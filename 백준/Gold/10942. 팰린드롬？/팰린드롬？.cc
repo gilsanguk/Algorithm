@@ -12,7 +12,7 @@ int palindrom(int s, int e) {
 	if (ret != -1) return ret;
 	ret = 1;
 	if (s + 1 < e - 1) {
-		ret &= palindrom(s + 1, e - 1);
+		ret = palindrom(s + 1, e - 1);
 	}
 	return ret;
 }
