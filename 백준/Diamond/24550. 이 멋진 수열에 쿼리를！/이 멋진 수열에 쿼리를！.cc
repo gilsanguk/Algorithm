@@ -19,7 +19,6 @@ vector<ll> section = {1};
 set<ll> qs;
 unordered_map<ll, ll> id_map;
 
-
 matrix operator*(const matrix& a, const matrix& b) {
     matrix c(3, vector<ll>(3));
     for (int i = 0; i < 3; i++) {
@@ -87,13 +86,6 @@ void solve() {
         update(1, 0, arr.size() - 1, id_map.at(Query[i][0]), arr[id_map.at(Query[i][0])]);
         matrix ans = tree[1];
         cout << MOD(ans[0][0] + ans[0][2]) << "\n";
-//        for (int i = 0; i < 3; i++) {
-//            for (int j = 0; j < 3; j++) {
-//                cout << ans[i][j] << ' ';
-//            }
-//            cout << '\n';
-//        }
-//        cout << '\n';
     }
 }
 
