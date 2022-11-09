@@ -1,39 +1,32 @@
 #include <iostream>
 #include <algorithm>
-#include <stack>
+#define MAX 999999999999999
+#define TEST
 
 using namespace std;
+using ll = long long;
 
 int T, N;
-int arr[14] = {0, 0, 1, 7, 4, 2, 6, 8, 10, 18, 22, 20, 28, 68};
-void solve(int n){
-   stack<int> s;
-   while (n > 13){
-       if (n == 17){
-           s.push(200);
-           n = 0;
-           break;
-       }
-       s.push(8);
-       n -= 7;
-   }
-   if(n != 0) s.push(arr[n]);
-   while(!s.empty()){
-       printf("%d", s.top());
-       s.pop();
-   }
-   printf(" ");
+ll arr[9] = {0, 0, 1, 7, 4, 2, 0, 8, 10};
+ll dp[101] = {0, 0, 1, 7, 4, 2, 6, 8, 10, };
+void solve(){
+    for (int i = 9; i <= 100; i++){
+        dp[i] = MAX;
+        for (int j = 2; j < 8; j++){
+            dp[i] = min(dp[i], dp[i - j]*10 + arr[j]);
+        }
+    }
 }
 
 int main() {
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
 #endif
     scanf("%d", &T);
+    solve();
     while(T--){
         scanf("%d", &N);
-        solve(N);
+        printf("%lld ", dp[N]);
         if (N & 1){
             printf("7");
             N -= 3;
