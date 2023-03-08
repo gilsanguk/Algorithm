@@ -1,25 +1,31 @@
-import sys;input = sys.stdin.readline
+# 델타 만들기
+dx = [0, 0, 1, -1]
+dy = [1, -1, 0, 0]
 
 
-def dfs(k ,y, x):
-    global res, ans
-    if k == 6:
-        tmp = ''.join(res)
-        ans.add(tmp)
+# DFS 6번 까지
+def dfs(num, y, x):
+
+    # 6자리 수가 되면
+    if len(num) == 6:
+        # set에 추가
+        num_set.add(num)
         return
-    for i in range(4):
-        ny, nx = y+dy[i], x+dx[i]
-        if 0 <= ny < 5 and 0 <= nx < 5:
-            res[k] = li[ny][nx]
-            dfs(k+1, ny, nx)
 
-li = [list(input().split()) for _ in range(5)]
-dy = [-1, 0, 1, 0]
-dx = [0, 1, 0, -1]
-res = [0] * 6
-ans = set()
-for y in range(5):
-    for x in range(5):
-        res[0] = li[y][x]
-        dfs(1, y, x)
-print(len(ans))
+    # 4방향 탐색
+    for n in range(4):
+        ny, nx = y + dy[n], x + dx[n]
+
+        # 범위안에 있다면
+        if 0 <= nx < 5 and 0 <= ny < 5:
+            dfs(num + number_pan[ny][nx], ny, nx)
+
+# 입력값 받기
+number_pan = [list(map(str, input().split())) for _ in range(5)]
+num_set = set()
+
+for i in range(5):
+    for j in range(5):
+        dfs(number_pan[i][j], i, j)
+
+print(len(num_set))
