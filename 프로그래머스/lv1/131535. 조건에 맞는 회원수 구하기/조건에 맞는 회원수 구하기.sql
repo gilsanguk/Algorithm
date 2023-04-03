@@ -1,2 +1,2 @@
 -- 코드를 입력하세요
-SELECT count(*) from user_info where year(joined) = "2021" and age between 20 and 29
+SELECT COUNT(*) FROM USER_INFO WHERE AGE BETWEEN 20 AND 29 AND YEAR(JOINED) = '2021'
