@@ -1,0 +1,1 @@
+i=int(input());print(i//5+(i%5>0))
