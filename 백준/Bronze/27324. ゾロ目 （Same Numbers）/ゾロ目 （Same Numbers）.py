@@ -1,2 +1,2 @@
-a,b=divmod(int(input()),10)
-print(int(a==b))
+a=int(input())
+print(int(a//10==a%10))
