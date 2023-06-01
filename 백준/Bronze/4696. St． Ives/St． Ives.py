@@ -1,0 +1,1 @@
+while a:=float(input()):print('%.2f'%(1+a+a*a+a**3+a**4))
