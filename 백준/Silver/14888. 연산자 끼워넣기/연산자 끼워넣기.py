@@ -21,6 +21,6 @@ def backtrack(curr, used, total):
 n = int(input())
 nums = list(map(int, input().split()))
 operator = list(map(int, input().split()))
-MAX, MIN = -987654321, 987654321
+MAX, MIN = -1987654321, 1987654321
 backtrack(1, [0, 0, 0, 0], nums[0])
 print(f'{MAX}\n{MIN}')
