@@ -6,40 +6,53 @@ using namespace std;
 
 int N, M;
 int arr[301];
-int pSum[302];
+int l, r, m;
 
-int memo[301][301], cnt[301][301];
-int dp(int n, int m) {
-    int& ret = memo[n][m];
-    if (m == M) {
-        cnt[n][m] = N - n;
-        return ret = pSum[N] - pSum[n];
-    }
-    if (ret != -1) return ret;
-    ret = 987654321;
-    for (int i = n + 1; i < N; i++) {
-        int tmp = max(pSum[i] - pSum[n], dp(i, m + 1));
-        if (tmp < ret) {
-            ret = tmp;
-            cnt[n][m] = i - n;
+bool isPossible(int x) {
+    int sum = 0, cnt = 1;
+    for (int i = 0; i < N; i++) {
+        sum += arr[i];
+        if (sum > x) {
+            sum = arr[i];
+            cnt++;
         }
     }
-    return ret;
+    return cnt <= M;
+}
+
+void printAns(int ans) {
+    printf("%d\n", ans);
+    int sum = 0, cnt = 0;
+    for (int i = 0; i < N; i++) {
+        sum += arr[i];
+        if (sum > ans) {
+            printf("%d ", cnt);
+            sum = arr[i];
+            M--;
+            cnt = 0;
+        }
+        cnt++;
+        if (N - i == M) break;
+    }
+    while (M--) {
+        printf("%d ", cnt);
+        cnt = 1;
+    }
 }
 
 void solve() {
     scanf("%d %d", &N, &M);
     for (int i = 0; i < N; i++) {
         scanf("%d", &arr[i]);
+        l = max(l, arr[i]);
+        r += arr[i];
     }
-    for (int i = 0; i < N; i++) {
-        pSum[i + 1] = pSum[i] + arr[i];
+    while (l < r) {
+        m = (l + r) / 2;
+        if (isPossible(m)) r = m;
+        else l = m + 1;
     }
-    memset(memo, -1, sizeof(memo));
-    printf("%d\n", dp(0, 1));
-    for (int i = 0, j = 1; j <= M; i += cnt[i][j], j++) {
-        printf("%d ", cnt[i][j]);
-    }
+    printAns(r);
 }
 
 int main() {
