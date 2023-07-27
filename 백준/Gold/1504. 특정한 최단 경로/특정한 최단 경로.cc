@@ -61,12 +61,11 @@ void solve(){
     input();
     dijkstra(U);
     int u2v = dist[V]; // U - V 최단거리
-    dijkstra(1);
-    int s2u = dist[U]; // 1 - U 최단거리
-    int s2v = dist[V]; // 1 - V 최단거리
-    dijkstra(N);
-    int u2n = dist[U]; // U - N 최단거리
-    int v2n = dist[V]; // V - N 최단거리
+    int s2u = dist[1]; // 1 - U 최단거리
+    int u2n = dist[N]; // U - N 최단거리
+    dijkstra(V);
+    int s2v = dist[1]; // 1 - V 최단거리
+    int v2n = dist[N]; // V - N 최단거리
     int ans = min(getSum(s2u, u2v, v2n), getSum(s2v, u2v, u2n)); // 1 - U - V - N or 1 - V - U - N
     if (ans == INF) ans = -1;
     printf("%d", ans);
