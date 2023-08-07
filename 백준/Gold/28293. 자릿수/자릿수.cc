@@ -7,7 +7,11 @@ int a, b;
 
 void solve() {
     scanf("%d %d", &a, &b);
-    printf("%d", (int) ceil(b * log10(a)));
+    long double c = log10(a);
+    if (c == (int) c) {
+        c += 1;
+    }
+    printf("%d", (int) ceil(b * c));
 }
 
 int main() {
