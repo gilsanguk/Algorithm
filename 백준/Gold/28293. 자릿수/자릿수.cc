@@ -8,9 +8,7 @@ int a, b;
 void solve() {
     scanf("%d %d", &a, &b);
     long double c = log10(a);
-    if (c == (int) c) {
-        c += 1;
-    }
+    if (c == (int) c) c++;
     printf("%d", (int) ceil(b * c));
 }
 
