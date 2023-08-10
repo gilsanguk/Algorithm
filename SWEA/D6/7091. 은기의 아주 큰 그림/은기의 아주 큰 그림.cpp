@@ -1,4 +1,4 @@
-#include <iostream>
+#include <cstdio>
 #define MAX 2001
 #define HASH_SIZE ((1 << 30) - 1)
 #define ll long long
@@ -58,30 +58,29 @@ int solve() {
     return cnt;
 }
 
-char c;
+char str[MAX];
 void input() {
-    cin >> H >> W >> N >> M;
+    scanf("%d %d %d %d", &H, &W, &N, &M);
     for (int y = 0; y < H; y++) {
+        scanf("%s", str);
         for (int x = 0; x < W; x++) {
-            cin >> c;
-            pat[y][x] = c == 'o';
+            pat[y][x] = str[x] == 'o';
         }
     }
     for (int y = 0; y < N; y++) {
+        scanf("%s", str);
         for (int x = 0; x < M; x++) {
-            cin >> c;
-            arr[y][x] = c == 'o';
+            arr[y][x] = str[x] == 'o';
         }
     }
 }
 
-
 int main() {
-    ios_base::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);
     int T;
-    cin >> T;
+    scanf("%d", &T);
     for (int i = 1; i <= T; i++) {
+        printf("#%d ", i);
         input();
-        cout << "#" << i << " " << solve() << "\n";
+        printf("%d\n", solve());
     }
 }
