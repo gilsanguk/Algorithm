@@ -1,65 +1,77 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#define INF 987654321
+#include <algorithm>
+#define INF 1987654321
 
 using namespace std;
 
-int T, N, M, K;
+int N, M, K;
 struct Node {
-    int v, c, d;
+    int id, cost, time;
     bool operator<(const Node& rhs) const {
-        return d > rhs.d;
+        return time > rhs.time;
     }
 };
 vector<Node> graph[101];
-int dp[101][10001];
-int dijkstra() {
-    int ret = 987654321;
-    priority_queue<Node> pq;
+priority_queue<Node> pq;
+int dist[101][10001];
+
+void dijkstra() {
     pq.push({1, 0, 0});
-    dp[1][0] = 0;
+    dist[1][0] = 0;
     while (!pq.empty()) {
         Node cur = pq.top();
         pq.pop();
-        if (cur.v == N) ret = min(ret, dp[cur.v][cur.c]);
-        for (Node& nxt: graph[cur.v]) {
-            int nCost = cur.c + nxt.c;
-            int nTime = cur.d + nxt.d;
+        if (dist[cur.id][cur.cost] < cur.time) continue;
+        for (Node& nxt: graph[cur.id]) {
+            int nCost = cur.cost + nxt.cost;
+            int nTime = cur.time + nxt.time;
             if (nCost > M) continue;
-            if (dp[nxt.v][nCost] <= nTime) continue;
-            dp[nxt.v][nCost] = nTime;
-            pq.push({nxt.v, nCost, nTime});
+            if (dist[nxt.id][nCost] <= nTime) continue;
+            for (int i = nCost; i <= M; i++) {
+                if (dist[nxt.id][i] > nTime) {
+                    dist[nxt.id][i] = nTime;
+                    break;
+                }
+            }
+            pq.push({nxt.id, nCost, nTime});
         }
     }
-    return ret;
 }
 
 void init() {
     for (int i = 1; i <= N; i++) {
-        graph[i].clear();
         for (int j = 1; j <= M; j++) {
-            dp[i][j] = INF;
+            dist[i][j] = INF;
         }
     }
 }
 
 void solve() {
-    scanf("%d", &T);
-    while (T--) {
-        scanf("%d %d %d", &N, &M, &K);
-        init();
-        for (int i = 0; i < K; i++) {
-            int u, v, c, d;
-            scanf("%d %d %d %d", &u, &v, &c, &d);
-            graph[u].push_back({v, c, d});
-        }
-        int ans = dijkstra();
-        if (ans == INF) printf("Poor KCM\n");
-        else printf("%d\n", ans);
+    scanf("%d %d %d", &N, &M, &K);
+    init();
+    for (int i = 0; i < K; i++) {
+        int u, v, c, d;
+        scanf("%d %d %d %d", &u, &v, &c, &d);
+        graph[u].push_back({v, c, d});
     }
+    for (int i = 1; i <= N; i++) {
+        sort(graph[i].begin(), graph[i].end(), [](const Node& lhs, const Node& rhs) {
+            return lhs.time < rhs.time;
+        });
+    }
+    dijkstra();
+    int ans = INF;
+    for (int i = 1; i <= M; i++) {
+        ans = min(ans, dist[N][i]);
+    }
+    if (ans == INF) printf("Poor KCM");
+    else printf("%d", ans);
 }
 
+int T;
 int main() {
+    scanf("%d", &T);
     solve();
 }
