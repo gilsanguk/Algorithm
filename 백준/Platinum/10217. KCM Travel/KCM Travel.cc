@@ -32,10 +32,10 @@ void dijkstra() {
             for (int i = nCost; i <= M; i++) {
                 if (dist[nxt.id][i] > nTime) {
                     dist[nxt.id][i] = nTime;
+                    pq.push({nxt.id, nCost, nTime});
                     break;
                 }
             }
-            pq.push({nxt.id, nCost, nTime});
         }
     }
 }
