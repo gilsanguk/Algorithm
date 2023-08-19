@@ -22,15 +22,12 @@ public class Main {
         if (n == N) return 1L;
         if (memo[n] != -1) return memo[n];
         memo[n] = 0L;
+        if (cipher.charAt(n) != '0')
+            memo[n] = MOD(solve(n + 1));
         if (n < N - 1) {
-            if (cipher.charAt(n) != '0')
-                memo[n] = MOD(memo[n] + solve(n + 1));
             int tmp = Integer.parseInt(cipher.substring(n, n + 2));
             if (9 < tmp && tmp < 27)
                 memo[n] = MOD(memo[n] + solve(n + 2));
-        } else {
-            if (cipher.charAt(n) != '0')
-                memo[n] = MOD(memo[n] + solve(n + 1));
         }
         return memo[n];
     }
