@@ -14,6 +14,7 @@ public class Main {
 
     static long[] memo = new long[1000001];
     public static long solve(int n) {
+        if (n == 0) return 0;
         if (n < 3) return 1;
         if (memo[n] != 0) return memo[n];
         return memo[n] = (solve(n - 1) + solve(n - 2)) % 1000000007;
