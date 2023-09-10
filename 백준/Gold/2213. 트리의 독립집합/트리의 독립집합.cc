@@ -64,7 +64,7 @@ void track(int cur, int prv) {
 void solve() {
     memset(memo, -1, sizeof(memo));
     dfs(1, -1);
-    printf("%d\n", max( dp(1, 0), dp(1, 1)));
+    printf("%d\n", max(dp(1, 0), dp(1, 1)));
     track(1, 1);
     sort(ans.begin(), ans.end());
     for (int& i : ans)
