@@ -35,6 +35,7 @@ void dfs(int cur, int prv) {
 int memo[10001][2];
 int dp(int cur, int flag) {
     int& ret = memo[cur][flag];
+    if (ret != -1) return ret;
     if (flag) {
         ret = arr[cur];
         for (int& nxt : tree[cur])
