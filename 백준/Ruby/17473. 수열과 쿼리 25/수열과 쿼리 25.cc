@@ -38,13 +38,12 @@ public:
     void updateAnd(int node, int s, int e, int l, int r, int x) {
         propagation(node, s, e);
         x += ((~x & ~tree[node].orV) & CHECK_BIT);
-        if (r < s || e < l) return; // 갱신 x
+        if (r < s || e < l || x == CHECK_BIT) return; // 갱신 x
         if (l <= s && e <= r && (~x & tree[node].andV) == (~x & CHECK_BIT)) { // 모든 비트가 영향을 받는 경우
             lazy[node] -= (CHECK_BIT - x);
             propagation(node, s, e);
             return;
         }
-        if (x == CHECK_BIT) return;
         int m = (s + e) / 2;
         updateAnd(node * 2, s, m, l, r, x);
         updateAnd(node * 2 + 1, m + 1, e, l, r, x);
@@ -54,13 +53,12 @@ public:
     void updateOr(int node, int s, int e, int l, int r, int x) {
         propagation(node, s, e);
         x -= (x & tree[node].andV); // 영향을 받을 수 없는 비트 제거
-        if (r < s || e < l) return;
+        if (r < s || e < l || x == 0) return;
         if (l <= s && e <= r && (x & tree[node].orV) == 0) { // 모든 비트가 영향을 받는 경우
             lazy[node] += x;
             propagation(node, s, e);
             return;
         }
-        if (x == 0) return;
         int m = (s + e) / 2;
         updateOr(node * 2, s, m, l, r, x);
         updateOr(node * 2 + 1, m + 1, e, l, r, x);
