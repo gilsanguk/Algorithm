@@ -1,6 +1,6 @@
 #include <iostream>
 #define MAX 200001
-#define CHECK_BIT ((1 << 30) - 1)
+#define CHECK_BIT ((1 << 20) - 1)
 
 using namespace std;
 
