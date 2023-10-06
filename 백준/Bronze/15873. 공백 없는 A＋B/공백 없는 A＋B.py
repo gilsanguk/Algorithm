@@ -1,0 +1,1 @@
+print(10+int(S[2:])if(S:=input())[1]=='0'else int(S[0])+int(S[1:]))
