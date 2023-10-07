@@ -1,0 +1,1 @@
+for _ in range(int(input())):print(i:=int(input()),'is',('even','odd')[i%2])
